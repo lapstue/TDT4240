@@ -6,14 +6,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class TDT4240Game extends ApplicationAdapter {
 
     float dT;
     int fpsString;
     BitmapFont font;
-	SpriteBatch batch;
+    SpriteBatch batch;
     Helicopter heli;
 
 	@Override
@@ -27,7 +26,7 @@ public class TDT4240Game extends ApplicationAdapter {
         heli = new Helicopter(500,500,1,1);
 	}
 
-
+    //Gamelogic. Feeds different update methods with the deltaTime since last execution,
     public void update(float dT){
         heli.update(dT);
     }
@@ -35,11 +34,14 @@ public class TDT4240Game extends ApplicationAdapter {
 	public void render () {
         fpsString = Gdx.graphics.getFramesPerSecond();
         dT = Gdx.graphics.getDeltaTime();
+        //Sets the background color to match the background around the helicopter sprite and clears
+        //the screen with this color.
 		Gdx.gl.glClearColor(255, 0, 192, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(dT);
 		batch.begin();
         heli.draw(batch);
+        //Displays the current FPS. Should probably increase the text size.
         font.draw(batch, ""+fpsString, 20,20);
 		batch.end();
     }

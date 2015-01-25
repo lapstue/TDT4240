@@ -1,6 +1,5 @@
 package no.ntnu.kaarebl;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -33,6 +32,7 @@ public class Helicopter {
 
     }
 
+    //Move the helicopter to a given X and Y coordinate.
     public void moveTo(int xNew, int yNew) {
         dX = xPos - xNew;
         dY = yPos - yNew;
@@ -44,21 +44,30 @@ public class Helicopter {
         }
     }
 
+    //Update the gamelogic for the helicopter. Wall collision should probably be separated into its
+    //own method.
     public void update(Float dT){
+        //Helicopter is about to leave the right of the screen.
         if(xPos > Constants.screenWidt-sprite.getWidth()){
             xSpeed = xSpeed*-1;
             sprite.flip(true,false);
         }
+        //Helicopter is about to leave the left side of the screen
         if(xPos < 0){
             xSpeed = xSpeed*-1;
             sprite.flip(true,false);
         }
+        //Helicopter is about to leave the top of the screen
         if(yPos + sprite.getHeight() > Constants.screenHeight){
             ySpeed = ySpeed*-1;
         }
+        //Helicopter is about to leave the bottom of the screen
         if(yPos < 0 + sprite.getHeight()/2){
             ySpeed = ySpeed*-1;
         }
+        //Calculates the new xPos and yPos based on the speed in X and Y direction.
+        //Note the hackish solution with the dT-variable. Will probably break horribly when the FPS
+        //fluctuates. 
         xPos = xPos + xSpeed * Math.round(dT*100);
         yPos = yPos + ySpeed * Math.round(dT*100);
         sprite.setPosition(xPos,yPos);
