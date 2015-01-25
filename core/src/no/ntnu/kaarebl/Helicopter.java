@@ -3,11 +3,12 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
  * Created by kbl on 1/24/15.
  */
-public class Helicopter {
+public class Helicopter extends Actor {
     int xPos;
     int yPos;
     int xGoal;
@@ -63,7 +64,7 @@ public class Helicopter {
     //Update the gamelogic for the helicopter. Wall collision should probably be separated into its
     //own method.
     public void update(Float dT){
-        moveTo(xGoal,yGoal);
+        //moveTo(xGoal,yGoal);
         //Helicopter is about to leave the right of the screen.
         if(xPos > Constants.screenWidt-sprite.getWidth()){
             xSpeed = xSpeed*-1;
@@ -79,7 +80,7 @@ public class Helicopter {
             ySpeed = ySpeed*-1;
         }
         //Helicopter is about to leave the bottom of the screen
-        if(yPos < 0 + sprite.getHeight()/2){
+        if(yPos < 0 + sprite.getHeight()/2 ){
             ySpeed = ySpeed*-1;
         }
         //Calculates the new xPos and yPos based on the speed in X and Y direction.
