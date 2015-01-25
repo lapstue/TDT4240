@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Helicopter {
     int xPos;
     int yPos;
-    int goalX;
-    int goalY;
+    int xGoal;
+    int yGoal;
     int xSpeed;
     int ySpeed;
     int dX;
@@ -29,24 +29,41 @@ public class Helicopter {
         this.ySpeed = ySpeed;
         sprite.setPosition(xPos,yPos);
         sprite.setPosition(xPos,yPos);
+        xGoal = 0;
+        yGoal = 0;
 
     }
 
     //Move the helicopter to a given X and Y coordinate.
     public void moveTo(int xNew, int yNew) {
-        dX = xPos - xNew;
-        dY = yPos - yNew;
-        if (dX > 0 && dX != 0) {
+        dX = xNew - xPos;
+        dY = yNew - yPos;
+        xGoal = xNew;
+        yGoal = yNew;
+        if (dX > 0) {
             xSpeed = 1;
         }
-        if (dX < 0 && dX != 0) {
+        if (dX < 0) {
             xSpeed = -1;
+        }
+        if (dX == 0){
+            xSpeed = 0;
+        }
+        if (dY > 0){
+            ySpeed = 1;
+        }
+        if(dY < 0){
+            ySpeed = -1;
+        }
+        if (dY == 0){
+            ySpeed = 0;
         }
     }
 
     //Update the gamelogic for the helicopter. Wall collision should probably be separated into its
     //own method.
     public void update(Float dT){
+        moveTo(xGoal,yGoal);
         //Helicopter is about to leave the right of the screen.
         if(xPos > Constants.screenWidt-sprite.getWidth()){
             xSpeed = xSpeed*-1;
@@ -67,7 +84,7 @@ public class Helicopter {
         }
         //Calculates the new xPos and yPos based on the speed in X and Y direction.
         //Note the hackish solution with the dT-variable. Will probably break horribly when the FPS
-        //fluctuates. 
+        //fluctuates.
         xPos = xPos + xSpeed * Math.round(dT*100);
         yPos = yPos + ySpeed * Math.round(dT*100);
         sprite.setPosition(xPos,yPos);

@@ -24,6 +24,7 @@ public class TDT4240Game extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         heli = new Helicopter(500,500,1,1);
+        heli.moveTo(270,120);
 	}
 
     //Gamelogic. Feeds different update methods with the deltaTime since last execution,
