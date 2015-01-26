@@ -2,15 +2,10 @@ package no.ntnu.kaarebl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import java.awt.event.InputEvent;
@@ -22,31 +17,33 @@ public class MainMenuScreen implements Screen {
 
     private TDT4240Game game;
     private Stage stage;
-    private Skin skin;
-    private static BitmapFont font;
-    private OrthographicCamera camera;
-    TextButton ex1Btn;
+    private InputListener inputListener;
+    private Table btnTable;
+    private SpriteButton btn1;
+    private SpriteButton btn2;
 
 
     public MainMenuScreen(TDT4240Game gam){
         create();
         game = gam;
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true,Constants.screenHeight,Constants.screenWidt);
 
     }
     public void create(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        font = new BitmapFont();
-        font.setColor(Color.BLACK);
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        inputListener = new InputListener();
 
-        TextButton ex1Btn = new TextButton("Exercise 1",skin,"default");
-        ex1Btn.setWidth(200f);
-        ex1Btn.setHeight(50f);
-        ex1Btn.setPosition(Constants.screenWidt/2-ex1Btn.getWidth()/2,Constants.screenHeight/2);
-        stage.addActor(ex1Btn);
+        btnTable = new Table();
+
+        btn1 = new SpriteButton("button.png");
+        btn2 = new SpriteButton("button2.png");
+        btnTable.add(btn1).row();
+        btnTable.add(btn2).row();
+        btnTable.setFillParent(true);
+        stage.addActor(btnTable);
+        Gdx.input.setInputProcessor(stage);
+
+
     }
 
     @Override
@@ -59,7 +56,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width,height,true);
+        //stage.getViewport().update(width,height,true);
+        stage.getCamera().update();
     }
 
     @Override
