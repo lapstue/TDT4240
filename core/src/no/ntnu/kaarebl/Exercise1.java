@@ -1,41 +1,30 @@
 package no.ntnu.kaarebl;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class Exercise1 implements Screen {
+public class Exercise1 implements Screen, InputProcessor {
 
-    float dT;
-    int fpsString;
-    TDT4240Game game;
-    BitmapFont font;
-    SpriteBatch batch;
     Helicopter heli;
+    BitmapFont font;
+    Stage stage;
 
-    public Exercise1(TDT4240Game game){
+    public Exercise1(TDT4240Game game) {
         create();
     }
-    public void create () {
-        font = new BitmapFont();
-        font.setColor(Color.BLACK);
-        Constants.screenHeight = Gdx.graphics.getHeight();
-        Constants.screenWidt = Gdx.graphics.getWidth();
 
-        batch = new SpriteBatch();
-        heli = new Helicopter(500,500,1,1);
-        //heli.moveTo(270,120);
+    public void create(){
+        stage = new Stage(new ScreenViewport());
+        heli = new Helicopter(100,100,1,1,true);
+        stage.addActor(heli);
+        Gdx.input.setInputProcessor(this);
+
     }
-
-    //Gamelogic. Feeds different update methods with the deltaTime since last execution,
-    public void update(float dT){
-        heli.update(dT);
-    }
-
     @Override
     public void show() {
 
@@ -43,18 +32,10 @@ public class Exercise1 implements Screen {
 
     @Override
     public void render(float delta) {
-        fpsString = Gdx.graphics.getFramesPerSecond();
-        dT = Gdx.graphics.getDeltaTime();
-        //Sets the background color to match the background around the helicopter sprite and clears
-        //the screen with this color.
-        Gdx.gl.glClearColor(255, 0, 192, 1);
+        Gdx.gl.glClearColor(128, 0, 128, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        update(dT);
-        batch.begin();
-        heli.draw(batch);
-        //Displays the current FPS. Should probably increase the text size.
-        font.draw(batch, ""+fpsString, 20,20);
-        batch.end();
+        stage.act(delta);
+        stage.draw();
 
     }
 
@@ -81,5 +62,47 @@ public class Exercise1 implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        heli.moveTo(screenX,screenY);
+        System.out.println("Got touch event!");
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
     }
 }
