@@ -5,26 +5,30 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Exercise1 implements Screen, InputProcessor {
 
     Helicopter heli;
-    BitmapFont font;
     Stage stage;
 
     public Exercise1(TDT4240Game game) {
         create();
     }
 
-    public void create(){
+    public void create() {
         stage = new Stage(new ScreenViewport());
-        heli = new Helicopter(100,100,1,1,true);
+        heli = new Helicopter(100, 100, 1, 1, true);
         stage.addActor(heli);
         Gdx.input.setInputProcessor(this);
-
     }
+
     @Override
     public void show() {
 
@@ -34,7 +38,7 @@ public class Exercise1 implements Screen, InputProcessor {
     public void render(float delta) {
         Gdx.gl.glClearColor(128, 0, 128, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act(delta);
+        stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
 
     }
@@ -81,14 +85,19 @@ public class Exercise1 implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        System.out.println("Touch down!");
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        heli.moveTo(screenX,screenY);
-        System.out.println("Got touch event!");
-        return false;
+        MoveToAction mta = new MoveToAction();
+        mta.setPosition(screenX-heli.getWidth()/2, Constants.screenHeight-screenY-heli.getHeight()/2);
+        mta.setDuration(2);
+        heli.addAction(mta);
+        heli.bounceMode = false;
+        System.out.print("Touch up!");
+        return true;
     }
 
     @Override
