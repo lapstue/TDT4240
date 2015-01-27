@@ -14,8 +14,10 @@ public class Helicopter extends Actor {
     int xSpeed;
     int ySpeed;
     boolean bounceMode;
+    boolean facingRight;
     Texture texture;
     Sprite sprite;
+
 
     public Helicopter(float xPos, float yPos, int xSpeed, int ySpeed, boolean bounceMode) {
         texture = new Texture("heli1_east.png");
@@ -23,9 +25,45 @@ public class Helicopter extends Actor {
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.bounceMode = bounceMode;
+        this.facingRight = true;
         setHeight(texture.getHeight());
         setWidth(texture.getWidth());
         setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
+    }
+
+    //Makes sure that the given x will not place the heli outside the screen bounds, and adjusts
+    //the given x to enfore that.
+    public float sanitizeX(float x) {
+        setDirection(x);
+        if(x+sprite.getWidth()>Constants.screenWidt){
+            x = Constants.screenWidt-sprite.getWidth();
+            return x;
+        }
+        else{
+            return x;
+        }
+    }
+
+    public float sanitizeY(float y){
+        if(y+sprite.getHeight()>Constants.screenHeight){
+            y = Constants.screenHeight-sprite.getHeight();
+        }
+        if(y-sprite.getHeight()<0){
+            y = 0;
+        }
+        return y;
+    }
+
+    public void setDirection(float x){
+        float dX = x - getX();
+        if(dX<1 && facingRight){
+            sprite.flip(true,false);
+            this.facingRight = false;
+        }
+        if(dX>1 && !facingRight){
+            sprite.flip(true,false);
+            this.facingRight = true;
+        }
     }
 
     //Update the gamelogic for the helicopter. Wall collision should probably be separated into its

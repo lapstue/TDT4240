@@ -103,11 +103,11 @@ public class Exercise1 implements Screen, InputProcessor {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         MoveToAction mta = new MoveToAction();
-        mta.setPosition(screenX-heli.getWidth()/2, Constants.screenHeight-screenY-heli.getHeight()/2);
+        mta.setPosition(heli.sanitizeX(screenX), heli.sanitizeY(Constants.screenHeight-screenY-heli.getHeight()/2));
         mta.setDuration(2);
         heli.addAction(mta);
         heli.bounceMode = false;
-        System.out.print("Touch up!");
+        System.out.print("Touch up at " + "X:" + screenX + " Y:"+screenY);
         return true;
     }
 
