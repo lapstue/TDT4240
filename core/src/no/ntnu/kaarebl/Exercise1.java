@@ -3,8 +3,10 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +19,9 @@ public class Exercise1 implements Screen, InputProcessor {
 
     Helicopter heli;
     Stage stage;
+    SpriteBatch batch;
+    BitmapFont font;
+
 
     public Exercise1(TDT4240Game game) {
         create();
@@ -26,7 +31,10 @@ public class Exercise1 implements Screen, InputProcessor {
         stage = new Stage(new ScreenViewport());
         heli = new Helicopter(100, 100, 1, 1, true);
         stage.addActor(heli);
+        batch = new SpriteBatch();
         Gdx.input.setInputProcessor(this);
+        font = new BitmapFont();
+        font.setColor(Color.BLACK);
     }
 
     @Override
@@ -40,6 +48,9 @@ public class Exercise1 implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        batch.begin();
+        font.draw(batch, "X:"+heli.getX()+" Y:"+(Constants.screenHeight-heli.getY()),30,Constants.screenHeight-30);
+        batch.end();
 
     }
 
