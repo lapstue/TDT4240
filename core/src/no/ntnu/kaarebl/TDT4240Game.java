@@ -20,7 +20,7 @@ public class TDT4240Game extends Game {
         stage = new Stage();
         batch = new SpriteBatch();
         font = new BitmapFont();
-        this.setScreen(new Exercise1(this));
+        this.setScreen(new MainMenuScreen(this));
     }
 
     public void render() {

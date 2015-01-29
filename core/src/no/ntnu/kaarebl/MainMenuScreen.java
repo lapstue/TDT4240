@@ -3,12 +3,15 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-import java.awt.event.InputEvent;
 
 /**
  * Created by kbl on 1/25/15.
@@ -18,9 +21,9 @@ public class MainMenuScreen implements Screen {
     private TDT4240Game game;
     private Stage stage;
     private InputListener inputListener;
+    private Image btn1;
+    private Image btn2;
     private Table btnTable;
-    private SpriteButton btn1;
-    private SpriteButton btn2;
 
 
     public MainMenuScreen(TDT4240Game gam){
@@ -29,19 +32,34 @@ public class MainMenuScreen implements Screen {
 
     }
     public void create(){
-        stage = new Stage(new ScreenViewport());
+        //Force the menu screen to have the size 480*800, and stretch the screen to fit the actual
+        //screensize. This makes sure that the buttons are readable on all devices, even HIDPI
+        stage = new Stage(new StretchViewport(480,800));
         Gdx.input.setInputProcessor(stage);
         inputListener = new InputListener();
+        btn1 = new Image(new Texture("button.png"));
+        btn2 = new Image(new Texture("button2.png"));
 
         btnTable = new Table();
+        btnTable.add(btn1).padBottom(10).row();
+        btnTable.add(btn2).padBottom(10).row();
 
-        btn1 = new SpriteButton("button.png");
-        btn2 = new SpriteButton("button2.png");
-        btnTable.add(btn1).row();
-        btnTable.add(btn2).row();
         btnTable.setFillParent(true);
         stage.addActor(btnTable);
         Gdx.input.setInputProcessor(stage);
+
+        btn1.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Exercise12(game,false));
+            }
+        });
+        btn2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Exercise12(game,true));
+            }
+        });
 
 
     }
