@@ -15,21 +15,27 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-public class Exercise1 implements Screen, InputProcessor {
+public class Exercise12 implements Screen, InputProcessor {
 
     Helicopter heli;
     Stage stage;
     SpriteBatch batch;
     BitmapFont font;
+    Boolean acceptHelicopterCClick;
+    Boolean animate;
 
 
-    public Exercise1(TDT4240Game game) {
+    public Exercise12(TDT4240Game game, Boolean acceptHelicopterClick, Boolean animate) {
         create();
+        //If true, this instance is for task 2, otherwise its for task 1
+        this.acceptHelicopterCClick = acceptHelicopterClick;
+        //If true, that means that this is task 3
+        this.animate = animate;
     }
 
     public void create() {
         stage = new Stage(new ScreenViewport());
-        heli = new Helicopter(100, 100, 1, 1, true);
+        heli = new Helicopter(100, 100, 1, 1, true,animate);
         stage.addActor(heli);
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(this);
@@ -102,12 +108,16 @@ public class Exercise1 implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        MoveToAction mta = new MoveToAction();
-        mta.setPosition(heli.sanitizeX(screenX), heli.sanitizeY(Constants.screenHeight-screenY-heli.getHeight()/2));
-        mta.setDuration(2);
-        heli.addAction(mta);
-        heli.bounceMode = false;
-        System.out.print("Touch up at " + "X:" + screenX + " Y:"+screenY);
+        //If false, just ignore the click, but return true, just to show that we handled the event.
+        if(acceptHelicopterCClick){
+            MoveToAction mta = new MoveToAction();
+            mta.setPosition(heli.sanitizeX(screenX), heli.sanitizeY(Constants.screenHeight-screenY-heli.getHeight()/2));
+            mta.setDuration(2);
+            heli.addAction(mta);
+            heli.bounceMode = false;
+            System.out.print("Touch up at " + "X:" + screenX + " Y:"+screenY);
+        }
+
         return true;
     }
 
