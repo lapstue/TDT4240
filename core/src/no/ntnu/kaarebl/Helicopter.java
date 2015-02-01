@@ -1,8 +1,11 @@
 package no.ntnu.kaarebl;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -16,34 +19,23 @@ public class Helicopter extends Actor {
     int ySpeed;
     boolean bounceMode;
     boolean facingRight;
+    boolean acceptHeliClick;
     Texture texture;
     Sprite sprite;
-    static final int FRAME_COLS = 4;
-    Texture heliSheet;
-    TextureRegion[] heliFrames;
 
 
-    public Helicopter(float xPos, float yPos, int xSpeed, int ySpeed, boolean bounceMode, boolean animate) {
-        if(animate){
-            heliSheet = new Texture("animation_sheet.png"));
-            TextureRegion[] tmp = TextureRegion.split(heliSheet, heliSheet.getWidth()/FRAME_COLS);
-            heliFrames = new TextureRegion[FRAME_COLS];
-            int index = 0;
-            for (int j = 0; j < FRAME_COLS; j++) {
-                heliFrames[index++]=[j];
-            }
-        }
-        else{
-            texture = new Texture("heli1_east.png");
-        }
+    public Helicopter(float xPos, float yPos, int xSpeed, int ySpeed, boolean bounceMode, boolean acceptHeliClick) {
+        texture = new Texture("heli1_east.png");
         sprite = new Sprite(texture);
+        setHeight(texture.getHeight());
+        setWidth(texture.getWidth());
+        setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
         this.xSpeed = xSpeed;
         this.ySpeed = ySpeed;
         this.bounceMode = bounceMode;
         this.facingRight = true;
-        setHeight(texture.getHeight());
-        setWidth(texture.getWidth());
-        setBounds(xPos, yPos, texture.getWidth(), texture.getHeight());
+        this.acceptHeliClick = acceptHeliClick;
+
     }
 
     //Makes sure that the given x will not place the heli outside the screen bounds, and adjusts
