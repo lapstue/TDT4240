@@ -17,21 +17,21 @@ public class Exercise12 implements Screen, InputProcessor {
     Stage stage;
     SpriteBatch batch;
     BitmapFont font;
+    Boolean bounceMode;
     Boolean acceptHelicopterCClick;
-    Boolean animate;
 
 
-    public Exercise12(TDT4240Game game, Boolean acceptHelicopterClick, Boolean animate) {
-        create();
+    public Exercise12(TDT4240Game game, Boolean bounceMode, Boolean acceptHelicopterClick) {
         //If true, this instance is for task 2, otherwise its for task 1
         this.acceptHelicopterCClick = acceptHelicopterClick;
+        this.bounceMode = bounceMode;
         //If true, that means that this is task 3
-        this.animate = animate;
+        create();
     }
 
     public void create() {
         stage = new Stage(new ScreenViewport());
-        heli = new Helicopter(100, 100, 1, 1, true,animate);
+        heli = new Helicopter(100, 100, 1, 1, bounceMode, acceptHelicopterCClick);
         stage.addActor(heli);
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(this);
