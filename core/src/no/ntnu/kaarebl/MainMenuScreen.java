@@ -23,6 +23,7 @@ public class MainMenuScreen implements Screen {
     private InputListener inputListener;
     private Image btn1;
     private Image btn2;
+    private Image btn3;
     private Table btnTable;
 
 
@@ -39,10 +40,12 @@ public class MainMenuScreen implements Screen {
         inputListener = new InputListener();
         btn1 = new Image(new Texture("button.png"));
         btn2 = new Image(new Texture("button2.png"));
+        btn3 = new Image(new Texture("button3.png"));
 
         btnTable = new Table();
         btnTable.add(btn1).padBottom(10).row();
         btnTable.add(btn2).padBottom(10).row();
+        btnTable.add(btn3).padBottom(10).row();
 
         btnTable.setFillParent(true);
         stage.addActor(btnTable);
@@ -51,13 +54,19 @@ public class MainMenuScreen implements Screen {
         btn1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Exercise12(game,false));
+                game.setScreen(new Exercise12(game,true,false));
             }
         });
         btn2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Exercise12(game,true));
+                game.setScreen(new Exercise12(game,true,true));
+            }
+        });
+        btn3.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Exercise3(game));
             }
         });
 
