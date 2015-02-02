@@ -3,7 +3,11 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
@@ -13,11 +17,15 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class Exercise4 implements Screen, InputProcessor {
 
     private Stage stage;
+    private BitmapFont font;
+    private SpriteBatch batcher;
     private Ball ball;
     private int player1Score;
     private int player2Score;
     private Paddle player1Paddle;
     private Paddle player2Paddle;
+    private String player1String;
+    private String player2String;
     private float scaling;
 
     public Exercise4(){
@@ -25,12 +33,16 @@ public class Exercise4 implements Screen, InputProcessor {
     }
 
     public void create() {
-        stage = new Stage(new StretchViewport(480,800));
         //Scaling factor used to translate screen coordinates to stage coordinates
         scaling = 480/Constants.screenWidt;
+        stage = new Stage(new StretchViewport(480,800));
+        batcher = new SpriteBatch();
+        font = new BitmapFont(Gdx.files.internal("font.fnt"),Gdx.files.internal("font.png"),false);
         ball = new Ball();
         player1Score = 0;
         player2Score = 0;
+        player1String = "" + player1Score;
+        player2String = "" + player2Score;
         //Set player1Paddle to be touch controlled and set start postion
         player1Paddle = new Paddle(false,ball,240,75);
         //player2Paddle is computer controlled
@@ -57,16 +69,31 @@ public class Exercise4 implements Screen, InputProcessor {
         //Player 2 has scored a point. Award point and reset the ball
         if(ball.getY()<0){
             player2Score = player2Score + 1;
+            player2String = "" + player2Score;
             System.out.println(player2Score);
             ball.setPosition(240,400);
+            if(player2Score>20){
+                endGame("Player2");
+            }
         }
         //Player1 has scored a point. Award point and reset the ball
         if(ball.getY()>800){
             player1Score = player1Score + 1;
+            player1String = "" + player1Score;
             System.out.println(player1Score);
             ball.setPosition(240,400);
+            if(player1Score>20){
+                endGame("Player1");
+            }
         }
     }
+
+    public void endGame(String player){
+        player1Paddle.remove();
+        player2Paddle.remove();
+        ball.remove();
+    }
+
     @Override
     public void show() {
 
@@ -82,8 +109,13 @@ public class Exercise4 implements Screen, InputProcessor {
         checkIfScore();
         //Move the on screen components according to the deltaT elapsed since last frame
         stage.act(delta);
+
         //Call the draw function of all the actors added to the scene.
         stage.draw();
+        batcher.begin();
+        font.draw(batcher, player1String, 36, 100/scaling);
+        font.draw(batcher, player2String, 36, 700/scaling);
+        batcher.end();
     }
 
     @Override
