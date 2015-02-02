@@ -17,8 +17,6 @@ public class Exercise3 implements Screen{
     Stage stage;
     SpriteBatch batch;
     BitmapFont font;
-    Boolean acceptHelicopterCClick;
-    Boolean animate;
 
 
     public Exercise3(TDT4240Game game) {
