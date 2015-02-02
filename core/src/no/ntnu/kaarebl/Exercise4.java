@@ -3,17 +3,12 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-/**
- * Created by kbl on 2/1/15.
- */
 public class Exercise4 implements Screen, InputProcessor {
 
     private Stage stage;
@@ -34,7 +29,7 @@ public class Exercise4 implements Screen, InputProcessor {
 
     public void create() {
         //Scaling factor used to translate screen coordinates to stage coordinates
-        scaling = 480/Constants.screenWidt;
+        scaling = 480/Constants.screenWidth;
         stage = new Stage(new StretchViewport(480,800));
         batcher = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("font.fnt"),Gdx.files.internal("font.png"),false);

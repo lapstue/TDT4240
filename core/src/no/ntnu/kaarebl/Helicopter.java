@@ -1,18 +1,9 @@
 package no.ntnu.kaarebl;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
-
-/**
- * Created by kbl on 1/24/15.
- */
 
 public class Helicopter extends Actor {
     int xSpeed;
@@ -42,8 +33,8 @@ public class Helicopter extends Actor {
     //the given x to enfore that.
     public float sanitizeX(float x) {
         setDirection(x);
-        if(x+sprite.getWidth()>Constants.screenWidt){
-            x = Constants.screenWidt-sprite.getWidth();
+        if(x+sprite.getWidth()>Constants.screenWidth){
+            x = Constants.screenWidth -sprite.getWidth();
             return x;
         }
         else{
@@ -78,7 +69,7 @@ public class Helicopter extends Actor {
     public void update(Float dT) {
         if (bounceMode) {
             //Helicopter is about to leave the right of the screen.
-            if (getX() > Constants.screenWidt - sprite.getWidth()) {
+            if (getX() > Constants.screenWidth - sprite.getWidth()) {
                 xSpeed = xSpeed * -1;
                 sprite.flip(true, false);
             }

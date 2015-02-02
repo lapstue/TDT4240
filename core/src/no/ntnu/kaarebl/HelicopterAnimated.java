@@ -8,11 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-
-/**
- * Created by kbl on 1/24/15.
- */
-
 public class HelicopterAnimated extends Actor {
     int xSpeed;
     int ySpeed;
@@ -64,8 +59,8 @@ public class HelicopterAnimated extends Actor {
     //the given x to enfore that.
     public float sanitizeX(float x) {
         setDirection(x);
-        if(x+sprite.getWidth()>Constants.screenWidt){
-            x = Constants.screenWidt-sprite.getWidth();
+        if(x+sprite.getWidth()>Constants.screenWidth){
+            x = Constants.screenWidth -sprite.getWidth();
             return x;
         }
         else{
@@ -102,7 +97,7 @@ public class HelicopterAnimated extends Actor {
     //own method.
     public void update(Float dT) {
         //Helicopter is about to leave the right of the screen.
-        if (xPos > Constants.screenWidt - sprite.getWidth()) {
+        if (xPos > Constants.screenWidth - sprite.getWidth()) {
             xSpeed = xSpeed * -1;
             sprite.flip(true, false);
         }

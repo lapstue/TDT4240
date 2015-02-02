@@ -6,9 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-/**
- * Created by kbl on 2/2/15.
- */
 public class Paddle extends Actor {
     Sprite sprite;
     Texture texture;

@@ -12,10 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
-
-/**
- * Created by kbl on 1/25/15.
- */
 public class MainMenuScreen implements Screen {
 
     private TDT4240Game game;
