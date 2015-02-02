@@ -42,7 +42,7 @@ public class MainMenuScreen implements Screen {
         btn1 = new Image(new Texture("button.png"));
         btn2 = new Image(new Texture("button2.png"));
         btn3 = new Image(new Texture("button3.png"));
-        btn4 = new Image(new Texture("button3.png"));
+        btn4 = new Image(new Texture("button4.png"));
 
         btnTable = new Table();
         btnTable.add(btn1).padBottom(10).row();
