@@ -18,6 +18,8 @@ public class Exercise4 implements Screen {
     private Ball ball;
     private int player1Score;
     private int player2Score;
+    private Paddle player1Paddle;
+    private Paddle player2Paddle;
     private SpriteBatch batch;
 
     public Exercise4(){
@@ -28,9 +30,22 @@ public class Exercise4 implements Screen {
         stage = new Stage(new StretchViewport(480,800));
         batch = new SpriteBatch();
         ball = new Ball();
-        stage.addActor(ball);
         player1Score = 0;
         player2Score = 0;
+        player1Paddle = new Paddle(false,ball,150,50);
+        player2Paddle = new Paddle(true,ball,200,300);
+        stage.addActor(ball);
+        stage.addActor(player1Paddle);
+        stage.addActor(player2Paddle);
+    }
+
+    public void checkCollision(){
+        if(player1Paddle.bounds.overlaps(ball.bounds)){
+            ball.collision();
+        }
+        if(player2Paddle.bounds.overlaps(ball.bounds)){
+            ball.collision();
+        }
     }
     @Override
     public void show() {
@@ -41,6 +56,7 @@ public class Exercise4 implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        checkCollision();
         stage.act(delta);
         stage.draw();
     }

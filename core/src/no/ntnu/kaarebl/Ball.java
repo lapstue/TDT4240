@@ -3,6 +3,7 @@ package no.ntnu.kaarebl;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 
@@ -14,17 +15,27 @@ public class Ball extends Actor {
     Texture texture;
     float xSpeed;
     float ySpeed;
+    Rectangle bounds;
 
     public Ball(){
         texture = new Texture("ball.png");
         sprite = new Sprite(texture);
-        setBounds(100, 100, texture.getWidth(), texture.getHeight());
         setHeight(texture.getHeight());
         setWidth(texture.getWidth());
         setX(200);
         setY(400);
+        bounds=new Rectangle((int)getX(), (int)getY(), (int)getWidth(), (int)getHeight());
+        setBounds();
         xSpeed = 200;
         ySpeed = 321;
+    }
+    public void setBounds(){
+        bounds.set(getX(),getY(),getWidth(),getHeight());
+    }
+
+    public void collision(){
+        xSpeed = xSpeed*-1;
+        ySpeed = ySpeed*-1;
     }
 
     public void updatePosition(float delta){
@@ -42,6 +53,7 @@ public class Ball extends Actor {
         }
         setX(getX()+xSpeed*delta);
         setY(getY()+ySpeed*delta);
+        setBounds();
     }
 
     @Override
