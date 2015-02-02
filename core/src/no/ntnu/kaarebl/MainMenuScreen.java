@@ -24,6 +24,7 @@ public class MainMenuScreen implements Screen {
     private Image btn1;
     private Image btn2;
     private Image btn3;
+    private Image btn4;
     private Table btnTable;
 
 
@@ -41,11 +42,13 @@ public class MainMenuScreen implements Screen {
         btn1 = new Image(new Texture("button.png"));
         btn2 = new Image(new Texture("button2.png"));
         btn3 = new Image(new Texture("button3.png"));
+        btn4 = new Image(new Texture("button3.png"));
 
         btnTable = new Table();
         btnTable.add(btn1).padBottom(10).row();
         btnTable.add(btn2).padBottom(10).row();
         btnTable.add(btn3).padBottom(10).row();
+        btnTable.add(btn4).padBottom(10).row();
 
         btnTable.setFillParent(true);
         stage.addActor(btnTable);
@@ -67,6 +70,12 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Exercise3(game));
+            }
+        });
+        btn4.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new Exercise4());
             }
         });
 
