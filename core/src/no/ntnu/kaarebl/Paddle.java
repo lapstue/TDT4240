@@ -34,13 +34,24 @@ public class Paddle extends Actor {
     }
 
     public void moveToBall(Ball ball){
-        sprite.setX(ball.getX());
+        if(ball.getX()+getHeight()>480){
+            setX(480-getHeight());
+        }
+        else{
+            setX(ball.getX());
+        }
         setBounds();
-        System.out.print(ball.getX());
     }
 
-    public void moveToTouch(float y){
-        sprite.setY(y);
+    public void moveToTouch(float x){
+        if(x+getHeight()>480){
+            x = 480-getHeight();
+        }
+        if (x<0){
+            x = 0+getHeight();
+        }
+        setX(x);
+        setBounds();
     }
 
     @Override
