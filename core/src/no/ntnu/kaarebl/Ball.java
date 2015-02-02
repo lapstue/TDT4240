@@ -34,7 +34,6 @@ public class Ball extends Actor {
     }
 
     public void collision(){
-        xSpeed = xSpeed*-1;
         ySpeed = ySpeed*-1;
     }
 
@@ -44,12 +43,6 @@ public class Ball extends Actor {
         }
         if (getX()<0){
             xSpeed = xSpeed*-1;
-        }
-        if (getY()+getWidth()>800){
-            ySpeed = ySpeed*-1;
-        }
-        if (getY()<0){
-            ySpeed = ySpeed*-1;
         }
         setX(getX()+xSpeed*delta);
         setY(getY()+ySpeed*delta);
